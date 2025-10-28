@@ -30,7 +30,11 @@ export const PageForNavigationSchema = z.object({
 
 export type Page = z.infer<typeof PageSchema>;
 
-export type PageForNavigation = z.infer<typeof PageForNavigationSchema>;
+export const MenuItemsSchema = z.object({
+  menuItems: z.array(PageForNavigationSchema),
+});
+
+export type MenuItems = z.infer<typeof MenuItemsSchema>;
 
 // ALL PAGES
 export async function getPages(): Promise<Page[]> {
@@ -62,7 +66,7 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
     headline,
     subtitle,
     'headerImage': headerImage.asset->url,
-    content
+    content,
   }`;
 
   try {
@@ -76,17 +80,21 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
 }
 
 // NAVIGATION
-export async function getPagesForNavigation(): Promise<PageForNavigation[]> {
-  const query = `*[_type == "page"][]{
-    title,
-    slug,
+export async function getMenuItems(): Promise<MenuItems> {
+  const query = `*[_type == "settings"][0]{
+    menuItems[]-> {
+      title,
+      slug
+    }
   }`;
 
   try {
     const data = await client.fetch(query);
-    return data.map((page: unknown) => PageForNavigationSchema.parse(page));
+    if (!data) return { menuItems: [] };
+    const validated = MenuItemsSchema.parse(data);
+    return validated;
   } catch (error) {
-    console.error("Error fetching pages:", error);
-    throw error;
+    console.error("Error fetching menu items:", error);
+    return { menuItems: [] };
   }
 }
