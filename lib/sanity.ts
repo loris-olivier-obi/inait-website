@@ -10,6 +10,7 @@ export const client = createClient({
 });
 
 export const PageSchema = z.object({
+  _id: z.string(),
   title: z.string(),
   slug: z.object({
     current: z.string(),
@@ -25,6 +26,7 @@ export type Page = z.infer<typeof PageSchema>;
 // ALL PAGES
 export async function getPages(): Promise<Page[]> {
   const query = `*[_type == "page"]{
+  _id,
     title,
     slug,
     headline,
@@ -45,6 +47,7 @@ export async function getPages(): Promise<Page[]> {
 // SINGLE PAGE
 export async function getPageBySlug(slug: string): Promise<Page | null> {
   const query = `*[_type == "page" && slug.current == $slug][0]{
+    _id,
     title,
     slug,
     headline,
