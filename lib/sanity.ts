@@ -21,7 +21,16 @@ export const PageSchema = z.object({
   content: z.array(z.any()).optional(),
 });
 
+export const PageForNavigationSchema = z.object({
+  title: z.string(),
+  slug: z.object({
+    current: z.string(),
+  }),
+});
+
 export type Page = z.infer<typeof PageSchema>;
+
+export type PageForNavigation = z.infer<typeof PageForNavigationSchema>;
 
 // ALL PAGES
 export async function getPages(): Promise<Page[]> {
@@ -63,5 +72,21 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
   } catch (error) {
     console.error("Error fetching page:", error);
     return null;
+  }
+}
+
+// NAVIGATION
+export async function getPagesForNavigation(): Promise<PageForNavigation[]> {
+  const query = `*[_type == "page"][]{
+    title,
+    slug,
+  }`;
+
+  try {
+    const data = await client.fetch(query);
+    return data.map((page: unknown) => PageForNavigationSchema.parse(page));
+  } catch (error) {
+    console.error("Error fetching pages:", error);
+    throw error;
   }
 }
