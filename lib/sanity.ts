@@ -1,0 +1,64 @@
+import { createClient } from "@sanity/client";
+import { z } from "zod";
+
+// Sanity client configuration
+export const client = createClient({
+  projectId: "v04zsz7d",
+  dataset: "production",
+  apiVersion: "2024-01-01",
+  useCdn: true,
+});
+
+export const PageSchema = z.object({
+  title: z.string(),
+  slug: z.object({
+    current: z.string(),
+  }),
+  headline: z.string().optional(),
+  subtitle: z.string().optional(),
+  headerImage: z.string().optional(),
+  content: z.array(z.any()).optional(),
+});
+
+export type Page = z.infer<typeof PageSchema>;
+
+// ALL PAGES
+export async function getPages(): Promise<Page[]> {
+  const query = `*[_type == "page"]{
+    title,
+    slug,
+    headline,
+    subtitle,
+    'headerImage': headerImage.asset->url,
+    content
+  }`;
+
+  try {
+    const data = await client.fetch(query);
+    return data.map((page: unknown) => PageSchema.parse(page));
+  } catch (error) {
+    console.error("Error fetching pages:", error);
+    throw error;
+  }
+}
+
+// SINGLE PAGE
+export async function getPageBySlug(slug: string): Promise<Page | null> {
+  const query = `*[_type == "page" && slug.current == $slug][0]{
+    title,
+    slug,
+    headline,
+    subtitle,
+    'headerImage': headerImage.asset->url,
+    content
+  }`;
+
+  try {
+    const data = await client.fetch(query, { slug });
+    if (!data) return null;
+    return PageSchema.parse(data);
+  } catch (error) {
+    console.error("Error fetching page:", error);
+    return null;
+  }
+}
