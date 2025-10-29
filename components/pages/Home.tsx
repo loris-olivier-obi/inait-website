@@ -7,7 +7,6 @@ import PageContent from "@/components/segments/content";
 import { getPageBySlug } from "@/lib/sanity";
 
 export default async function Home() {
-  // Fetch the "home" page from Sanity
   const page = await getPageBySlug("home");
 
   if (!page) {

@@ -1,6 +1,7 @@
 import { PageProps } from "@/app/type/page";
-import PageContent from "@/components/pages/Page";
 import { getPageBySlug } from "@/lib/sanity";
+
+import PageComponent from "@/components/pages/Page";
 
 export default async function Page({
   params,
@@ -18,5 +19,5 @@ export default async function Page({
     );
   }
 
-  return <PageContent content={content as PageProps} />;
+  return <PageComponent content={content as PageProps} />;
 }
