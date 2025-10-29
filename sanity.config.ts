@@ -6,8 +6,8 @@ export default defineConfig({
   name: "default",
   title: "inait-website",
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "v04zsz7d",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  projectId: "v04zsz7d",
+  dataset: "production",
 
   plugins: [structureTool()],
 

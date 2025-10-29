@@ -2,9 +2,21 @@ import { createClient } from "@sanity/client";
 import { z } from "zod";
 
 // Sanity client configuration
+// Using hardcoded values to avoid Vercel environment variable conflicts
+const projectId = "v04zsz7d";
+const dataset = "production";
+
+// Warn if wrong project ID is detected in environment variables
+const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+if (envProjectId && envProjectId !== projectId) {
+  console.warn(
+    `⚠️  WARNING: Environment variable NEXT_PUBLIC_SANITY_PROJECT_ID is set to "${envProjectId}" but using "${projectId}" instead.`
+  );
+}
+
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "v04zsz7d",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  projectId,
+  dataset,
   apiVersion: "2024-01-01",
   useCdn: true,
 });
@@ -116,8 +128,20 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
   }`;
 
   try {
+    // Debug: log the slug being searched for
+    console.log("Searching for slug:", slug);
+
     const data = await client.fetch(query, { slug });
-    if (!data) return null;
+
+    // Debug: if no data, try to see what slugs exist
+    if (!data) {
+      const allPages = await client.fetch(
+        `*[_type == "page"]{ title, "slug": slug.current }`
+      );
+      console.log("Available pages:", JSON.stringify(allPages, null, 2));
+      return null;
+    }
+
     return PageSchema.parse(data);
   } catch (error) {
     console.error("Error fetching page:", error);
