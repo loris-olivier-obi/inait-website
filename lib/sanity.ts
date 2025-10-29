@@ -45,7 +45,20 @@ export async function getPages(): Promise<Page[]> {
     headline,
     subtitle,
     'headerImage': headerImage.asset->url,
-    content
+    content[] {
+    _key,
+      _type,
+      mediaType,
+      mediaAlignment,
+      title,
+      titleLevel,
+      theme,
+      content,
+      "image": image.asset -> url,
+      video,
+      leftColumn,
+      rightColumn,
+    },
   }`;
 
   try {
@@ -66,7 +79,20 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
     headline,
     subtitle,
     'headerImage': headerImage.asset->url,
-    content,
+    content[] {
+      _key,
+      _type,
+      mediaType,
+      mediaAlignment,
+      title,
+      titleLevel,
+      theme,
+      content,
+      "image": image.asset -> url,
+      video,
+      leftColumn,
+      rightColumn,
+    }
   }`;
 
   try {

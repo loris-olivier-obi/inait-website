@@ -1,4 +1,9 @@
+import {
+  DoubleColumnBlockProps,
+  TitleHeadlineBlockProps,
+} from "@/app/type/page";
 import HeaderPage from "@/components/segments/block/HeaderPage";
+import PageContent from "@/components/segments/content";
 import { getPageBySlug } from "@/lib/sanity";
 
 export default async function Home() {
@@ -20,6 +25,11 @@ export default async function Home() {
         subtitle={page.subtitle || ""}
         headerImage={page.headerImage}
         title={page.title}
+      />
+      <PageContent
+        content={
+          page.content as (TitleHeadlineBlockProps | DoubleColumnBlockProps)[]
+        }
       />
     </div>
   );

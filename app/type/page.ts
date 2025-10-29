@@ -10,6 +10,7 @@ export type TitleHeadlineBlockProps = {
   image: string;
   video: string;
   content: PortableTextBlock;
+  theme: string;
 };
 
 export type DoubleColumnBlockProps = {
@@ -17,6 +18,7 @@ export type DoubleColumnBlockProps = {
   _key: string;
   leftColumn: PortableTextBlock;
   rightColumn: PortableTextBlock;
+  theme: string;
 };
 
 export type PageProps = {
