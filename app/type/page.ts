@@ -1,5 +1,22 @@
 import { PortableTextBlock } from "next-sanity";
 
+export type GridCellProps = {
+  _key: string;
+  title: string;
+  description: PortableTextBlock;
+  mediaType: string;
+  image: string;
+  video: string;
+};
+
+export type GridBlockProps = {
+  _type: string;
+  _key: string;
+  has_description: boolean;
+  description: PortableTextBlock;
+  cells: GridCellProps[];
+};
+
 export type TitleHeadlineBlockProps = {
   _type: string;
   _key: string;
@@ -30,5 +47,9 @@ export type PageProps = {
   headline?: string;
   subtitle?: string;
   headerImage?: string;
-  content: (TitleHeadlineBlockProps | DoubleColumnBlockProps)[];
+  content: (
+    | TitleHeadlineBlockProps
+    | DoubleColumnBlockProps
+    | GridBlockProps
+  )[];
 };

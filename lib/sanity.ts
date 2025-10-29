@@ -3,8 +3,8 @@ import { z } from "zod";
 
 // Sanity client configuration
 export const client = createClient({
-  projectId: "v04zsz7d",
-  dataset: "production",
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "v04zsz7d",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
   apiVersion: "2024-01-01",
   useCdn: true,
 });
@@ -46,7 +46,7 @@ export async function getPages(): Promise<Page[]> {
     subtitle,
     'headerImage': headerImage.asset->url,
     content[] {
-    _key,
+      _key,
       _type,
       mediaType,
       mediaAlignment,
@@ -58,6 +58,16 @@ export async function getPages(): Promise<Page[]> {
       video,
       leftColumn,
       rightColumn,
+      has_description,
+      description,
+      cells[] {
+        _key,
+        title,
+        description,
+        mediaType,
+        "image": image.asset -> url,
+        video,
+      },
     },
   }`;
 
@@ -92,6 +102,16 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
       video,
       leftColumn,
       rightColumn,
+      has_description,
+      description,
+      cells[] {
+        _key,
+        title,
+        description,
+        mediaType,
+        "image": image.asset -> url,
+        video,
+      },
     }
   }`;
 

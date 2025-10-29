@@ -7,10 +7,6 @@ import Image from "next/image";
 import styles from "./portabletext.module.css";
 
 function getVimeoEmbedUrl(url: string): string {
-  // Extract video ID from various Vimeo URL formats:
-  // https://vimeo.com/1065418485
-  // https://vimeo.com/1065418485?fl=pl&fe=vl
-  // https://player.vimeo.com/video/1065418485
   const match = url.match(/(?:vimeo\.com\/|video\/)(\d+)/);
   if (match && match[1]) {
     return `https://player.vimeo.com/video/${match[1]}?autoplay=1&loop=1&muted=1`;

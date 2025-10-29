@@ -1,15 +1,21 @@
 import {
   DoubleColumnBlockProps,
+  GridBlockProps,
   TitleHeadlineBlockProps,
 } from "@/app/type/page";
 import DoubleColumn from "@/components/segments/block/DoubleColumn";
+import GridBlock from "@/components/segments/block/GridBlock";
 import TitleHeadline from "@/components/segments/block/TitleHeadline";
 import { match } from "ts-pattern";
 
 export default function PageContent({
   content,
 }: {
-  content: (TitleHeadlineBlockProps | DoubleColumnBlockProps)[];
+  content: (
+    | TitleHeadlineBlockProps
+    | DoubleColumnBlockProps
+    | GridBlockProps
+  )[];
 }) {
   return (
     <div>
@@ -26,6 +32,9 @@ export default function PageContent({
               key={block._key}
               {...(block as DoubleColumnBlockProps)}
             />
+          ))
+          .with("grid", () => (
+            <GridBlock key={block._key} {...(block as GridBlockProps)} />
           ))
           .otherwise(() => (
             <div key={block._key}>Unknown block type: {block._type}</div>
