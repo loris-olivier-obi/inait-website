@@ -2,21 +2,23 @@ import { createClient } from "@sanity/client";
 import { z } from "zod";
 
 // Sanity client configuration
-// Using hardcoded values to avoid Vercel environment variable conflicts
-const projectId = "v04zsz7d";
-const dataset = "production";
+// CRITICAL: Hardcoded values to override any incorrect Vercel environment variables
 
-// Warn if wrong project ID is detected in environment variables
-const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-if (envProjectId && envProjectId !== projectId) {
-  console.warn(
-    `⚠️  WARNING: Environment variable NEXT_PUBLIC_SANITY_PROJECT_ID is set to "${envProjectId}" but using "${projectId}" instead.`
-  );
+// Force ignore environment variables that might have wrong values
+// This ensures we ALWAYS use the correct project ID regardless of Vercel settings
+if (typeof process !== "undefined" && process.env) {
+  const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+  if (envProjectId && envProjectId === "f015aq3i") {
+    // Explicitly warn about the problematic value
+    console.error(
+      `❌ ERROR: Found incorrect project ID "f015aq3i" in environment variables. Using correct ID "v04zsz7d" instead.`
+    );
+  }
 }
 
 export const client = createClient({
-  projectId,
-  dataset,
+  projectId: "v04zsz7d", // Explicitly hardcoded - do not change
+  dataset: "production", // Explicitly hardcoded - do not change
   apiVersion: "2024-01-01",
   useCdn: true,
 });
@@ -30,7 +32,7 @@ export const PageSchema = z.object({
   headline: z.string().optional(),
   subtitle: z.string().optional(),
   headerImage: z.string().optional(),
-  content: z.array(z.any()).optional(),
+  content: z.array(z.any()).nullable().optional(),
 });
 
 export const PageForNavigationSchema = z.object({
