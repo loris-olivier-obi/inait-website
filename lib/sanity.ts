@@ -2,15 +2,6 @@ import { createClient } from "@sanity/client";
 import { PortableTextBlock } from "next-sanity";
 import { z } from "zod";
 
-if (typeof process !== "undefined" && process.env) {
-  const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  if (envProjectId && envProjectId === "f015aq3i") {
-    console.error(
-      `❌ ERROR: Found incorrect project ID "f015aq3i" in environment variables. Using correct ID "v04zsz7d" instead.`
-    );
-  }
-}
-
 export const client = createClient({
   projectId: "v04zsz7d",
   dataset: "production",
