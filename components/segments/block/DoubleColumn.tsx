@@ -46,7 +46,7 @@ export default function DoubleColumn({
     <div
       className={cn(
         "flex flex-col w-full md:flex-row gap-12 py-32",
-        backgroundColor
+        backgroundColor,
       )}
     >
       <div className={cn(styles.content, textColor, "w-1/2")}>

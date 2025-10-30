@@ -5,6 +5,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 ## Commands
 
 ### Development
+
 ```bash
 pnpm dev              # Start Next.js dev server (localhost:3000)
 pnpm sanity           # Start Sanity Studio (localhost:3000/studio)
@@ -13,6 +14,7 @@ pnpm sanity           # Start Sanity Studio (localhost:3000/studio)
 **Note**: For full development, run both commands in separate terminals.
 
 ### Build & Deploy
+
 ```bash
 pnpm build            # Build Next.js production app
 pnpm start            # Start production server
@@ -21,11 +23,13 @@ pnpm sanity:deploy    # Deploy Sanity Studio to sanity.io
 ```
 
 ### Code Quality
+
 ```bash
 pnpm lint             # Run ESLint
 ```
 
 ### Sanity Utilities
+
 ```bash
 pnpm sanity:open      # Open Sanity Studio in browser
 ```
@@ -33,6 +37,7 @@ pnpm sanity:open      # Open Sanity Studio in browser
 ## Architecture
 
 ### Tech Stack
+
 - **Framework**: Next.js 16 (App Router)
 - **CMS**: Sanity CMS with embedded Studio
 - **Language**: TypeScript (strict mode)
@@ -43,6 +48,7 @@ pnpm sanity:open      # Open Sanity Studio in browser
 ### Key Architectural Patterns
 
 #### Sanity Integration
+
 This project uses **Sanity CMS** as a headless CMS with the Studio embedded at `/studio`. The integration follows these patterns:
 
 1. **Dual-layer Type Safety**:
@@ -79,6 +85,7 @@ sanity/
 ### Environment Variables
 
 Required environment variables (see `env.local.example`):
+
 ```
 NEXT_PUBLIC_SANITY_PROJECT_ID=v04zsz7d
 NEXT_PUBLIC_SANITY_DATASET=production
@@ -96,16 +103,21 @@ NEXT_PUBLIC_SANITY_DATASET=production
 4. Add data fetching function in `lib/sanity.ts`
 
 Example pattern:
+
 ```typescript
 // sanity/schemaTypes/author.ts
 export default defineType({
-  name: 'author',
-  type: 'document',
-  fields: [/* ... */]
+  name: "author",
+  type: "document",
+  fields: [
+    /* ... */
+  ],
 });
 
 // lib/sanity.ts
-export const AuthorSchema = z.object({/* ... */});
+export const AuthorSchema = z.object({
+  /* ... */
+});
 export async function getAuthors() {
   const data = await client.fetch(`*[_type == "author"]{...}`);
   return data.map((item: unknown) => AuthorSchema.parse(item));
@@ -115,6 +127,7 @@ export async function getAuthors() {
 ### Working with Images
 
 Always use the `urlFor()` helper for Sanity images:
+
 ```typescript
 import { urlFor } from "@/lib/sanity.image";
 

@@ -44,7 +44,7 @@ export default function Headline({ title, level, theme }: HeadlineProps) {
     <div
       className={cn(
         "relative w-full flex flex-col pt-20 px-10 text-primary-8",
-        backgroundColor
+        backgroundColor,
       )}
     >
       {mainTitle}

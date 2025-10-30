@@ -119,7 +119,7 @@ export default function TitleHeadline({
         mediaAlignment === "none" ? "py-[30vh]" : "py-[12vh]",
         backgroundColor,
         textColor,
-        flexDirection
+        flexDirection,
       )}
     >
       <section className="relative w-1/2 px-20">
