@@ -10,9 +10,7 @@ export default function Form({
   message,
   setMessage,
   error,
-  setError,
   submitted,
-  setSubmitted,
   handleSubmit,
 }: {
   firstName: string;
@@ -24,9 +22,7 @@ export default function Form({
   message: string;
   setMessage: (value: string) => void;
   error: string;
-  setError: (value: string) => void;
   submitted: boolean;
-  setSubmitted: (value: boolean) => void;
   handleSubmit: (e: React.FormEvent) => void;
 }) {
   return (
