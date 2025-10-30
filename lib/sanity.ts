@@ -2,11 +2,17 @@ import { createClient } from "@sanity/client";
 import { PortableTextBlock } from "next-sanity";
 import { z } from "zod";
 
+// Sanity client configuration from environment variables
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const token = process.env.SANITY_API_TOKEN; // server-side only
+
 export const client = createClient({
-  projectId: "v04zsz7d",
-  dataset: "production",
+  projectId,
+  dataset,
   apiVersion: "2024-01-01",
-  useCdn: true,
+  useCdn: !token, // if we have a token (server), prefer fresh data
+  token, // optional; do not expose in client code
 });
 
 export const PageSchema = z.object({
@@ -36,15 +42,6 @@ export const MenuItemsSchema = z.object({
 
 export type MenuItems = z.infer<typeof MenuItemsSchema>;
 
-export type News = {
-  date: string;
-  image: string;
-  link: string;
-  linkType: string;
-  summary: PortableTextBlock[];
-  title: string;
-};
-
 // ALL PAGES
 export async function getPages(): Promise<Page[]> {
   const query = `*[_type == "page"]{
@@ -67,15 +64,8 @@ export async function getPages(): Promise<Page[]> {
       video,
       leftColumn,
       rightColumn,
-      firstColumn,
-      secondColumn,
-      thirdColumn,
       has_description,
       description,
-      emailAddress,
-      phoneNumber,
-      message,
-      address,
       cells[] {
         _key,
         title,
@@ -118,15 +108,8 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
       video,
       leftColumn,
       rightColumn,
-      firstColumn,
-      secondColumn,
-      thirdColumn,
       has_description,
       description,
-      emailAddress,
-      phoneNumber,
-      message,
-      address,
       cells[] {
         _key,
         title,
@@ -139,20 +122,8 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
   }`;
 
   try {
-    // Debug: log the slug being searched for
-    console.log("Searching for slug:", slug);
-
     const data = await client.fetch(query, { slug });
-
-    // Debug: if no data, try to see what slugs exist
-    if (!data) {
-      const allPages = await client.fetch(
-        `*[_type == "page"]{ title, "slug": slug.current }`
-      );
-      console.log("Available pages:", JSON.stringify(allPages, null, 2));
-      return null;
-    }
-
+    if (!data) return null;
     return PageSchema.parse(data);
   } catch (error) {
     console.error("Error fetching page:", error);
@@ -179,6 +150,16 @@ export async function getMenuItems(): Promise<MenuItems> {
     return { menuItems: [] };
   }
 }
+
+// NEWS
+export type News = {
+  date: string;
+  image: string;
+  link: string;
+  linkType: string;
+  summary: PortableTextBlock[];
+  title: string;
+};
 
 export async function getNews(): Promise<News[]> {
   const query = `*[_type == "news"][]{
