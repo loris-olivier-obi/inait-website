@@ -1,19 +1,6 @@
-import { createClient } from "@sanity/client";
+import { client } from "@/app/api/pages/sanity";
 import { PortableTextBlock } from "next-sanity";
 import { z } from "zod";
-
-// Sanity client configuration from environment variables
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const token = process.env.SANITY_API_TOKEN; // server-side only
-
-export const client = createClient({
-  projectId,
-  dataset,
-  apiVersion: "2024-01-01",
-  useCdn: !token, // if we have a token (server), prefer fresh data
-  token, // optional; do not expose in client code
-});
 
 export const PageSchema = z.object({
   _id: z.string(),
