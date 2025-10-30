@@ -1,0 +1,12 @@
+.content {
+  width: 100%;
+}
+
+.content > p {
+  font-family: var(--font-gabarito);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.55;
+  hyphens: auto;
+  color: white;
+}

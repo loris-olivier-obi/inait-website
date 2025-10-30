@@ -1,4 +1,5 @@
 import { createClient } from "@sanity/client";
+import { PortableTextBlock } from "next-sanity";
 import { z } from "zod";
 
 if (typeof process !== "undefined" && process.env) {
@@ -43,6 +44,15 @@ export const MenuItemsSchema = z.object({
 });
 
 export type MenuItems = z.infer<typeof MenuItemsSchema>;
+
+export type News = {
+  date: string;
+  image: string;
+  link: string;
+  linkType: string;
+  summary: PortableTextBlock[];
+  title: string;
+};
 
 // ALL PAGES
 export async function getPages(): Promise<Page[]> {
@@ -176,5 +186,23 @@ export async function getMenuItems(): Promise<MenuItems> {
   } catch (error) {
     console.error("Error fetching menu items:", error);
     return { menuItems: [] };
+  }
+}
+
+export async function getNews(): Promise<News[]> {
+  const query = `*[_type == "news"][]{
+    date,
+    "image": image.asset->url,
+    link,
+    linkType,
+    summary,
+    title
+  }`;
+  try {
+    const data = await client.fetch(query);
+    return data as News[];
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return [];
   }
 }
