@@ -8,6 +8,16 @@ export type HeadlineProps = {
   theme: string;
 };
 
+export type ContactFormBlockProps = {
+  _type: string;
+  _key: string;
+  title: string;
+  emailAddress: string;
+  phoneNumber: string;
+  message: PortableTextBlock;
+  address: PortableTextBlock;
+};
+
 export type GridCellProps = {
   _key: string;
   title: string;

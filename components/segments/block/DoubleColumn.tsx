@@ -2,9 +2,10 @@ import { DoubleColumnBlockProps } from "@/app/type/page";
 import { cn } from "@/utils/classNames";
 import { PortableText } from "next-sanity";
 import DividerPortableText from "./DividerPortableText";
-import styles from "./doubleColumn.module.css";
 import ImagePortableText from "./ImagePortableText";
 import VideoPortableText from "./VideoPortableText";
+
+import styles from "./doubleColumn.module.css";
 
 export default function DoubleColumn({
   leftColumn,

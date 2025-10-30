@@ -1,15 +1,9 @@
 import { createClient } from "@sanity/client";
 import { z } from "zod";
 
-// Sanity client configuration
-// CRITICAL: Hardcoded values to override any incorrect Vercel environment variables
-
-// Force ignore environment variables that might have wrong values
-// This ensures we ALWAYS use the correct project ID regardless of Vercel settings
 if (typeof process !== "undefined" && process.env) {
   const envProjectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
   if (envProjectId && envProjectId === "f015aq3i") {
-    // Explicitly warn about the problematic value
     console.error(
       `❌ ERROR: Found incorrect project ID "f015aq3i" in environment variables. Using correct ID "v04zsz7d" instead.`
     );
@@ -17,8 +11,8 @@ if (typeof process !== "undefined" && process.env) {
 }
 
 export const client = createClient({
-  projectId: "v04zsz7d", // Explicitly hardcoded - do not change
-  dataset: "production", // Explicitly hardcoded - do not change
+  projectId: "v04zsz7d",
+  dataset: "production",
   apiVersion: "2024-01-01",
   useCdn: true,
 });
@@ -72,8 +66,15 @@ export async function getPages(): Promise<Page[]> {
       video,
       leftColumn,
       rightColumn,
+      firstColumn,
+      secondColumn,
+      thirdColumn,
       has_description,
       description,
+      emailAddress,
+      phoneNumber,
+      message,
+      address,
       cells[] {
         _key,
         title,
@@ -116,8 +117,15 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
       video,
       leftColumn,
       rightColumn,
+      firstColumn,
+      secondColumn,
+      thirdColumn,
       has_description,
       description,
+      emailAddress,
+      phoneNumber,
+      message,
+      address,
       cells[] {
         _key,
         title,

@@ -59,7 +59,7 @@ export default function TitleHeadline({
       break;
     case "h3":
       mainTitle = (
-        <h3 className="block font-dm-serif text-7xl font-bold mb-4!">
+        <h3 className="block font-dm-serif text-7xl font-bold mb-7!">
           {title}
         </h3>
       );
@@ -67,6 +67,13 @@ export default function TitleHeadline({
     case "h4":
       mainTitle = (
         <h4 className="block font-dm-serif text-4xl font-bold">{title}</h4>
+      );
+      break;
+    case "h5":
+      mainTitle = (
+        <h5 className="block font-dm-serif text-2xl font-bold uppercase tracking-wide">
+          {title}
+        </h5>
       );
       break;
     default:

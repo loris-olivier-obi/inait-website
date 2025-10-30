@@ -2,9 +2,10 @@ import { TripleColumnBlockProps } from "@/app/type/page";
 import { cn } from "@/utils/classNames";
 import { PortableText } from "next-sanity";
 import DividerPortableText from "./DividerPortableText";
-import styles from "./doubleColumn.module.css";
 import ImagePortableText from "./ImagePortableText";
 import VideoPortableText from "./VideoPortableText";
+
+import styles from "./tripleColumn.module.css";
 
 export default function TripleColumn({
   firstColumn,
@@ -44,18 +45,15 @@ export default function TripleColumn({
 
   return (
     <div
-      className={cn(
-        "flex flex-col w-full md:flex-row gap-12 py-32",
-        backgroundColor
-      )}
+      className={cn("relative grid grid-cols-3 gap-8 py-32", backgroundColor)}
     >
-      <div className={cn(styles.content, textColor, "w-1/2")}>
+      <div className={cn(styles.content, textColor, "w-full")}>
         <PortableText value={firstColumn} components={portableComponents} />
       </div>
-      <div className={cn(styles.content, textColor, "w-1/2")}>
+      <div className={cn(styles.content, textColor, "w-full")}>
         <PortableText value={secondColumn} components={portableComponents} />
       </div>
-      <div className={cn(styles.content, textColor, "w-1/2")}>
+      <div className={cn(styles.content, textColor, "w-full")}>
         <PortableText value={thirdColumn} components={portableComponents} />
       </div>
     </div>

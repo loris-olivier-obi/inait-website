@@ -1,10 +1,12 @@
 import {
+  ContactFormBlockProps,
   DoubleColumnBlockProps,
   GridBlockProps,
   HeadlineProps,
   TitleHeadlineBlockProps,
   TripleColumnBlockProps,
 } from "@/app/type/page";
+import ContactForm from "@/components/segments/block/ContactForm";
 import DoubleColumn from "@/components/segments/block/DoubleColumn";
 import GridBlock from "@/components/segments/block/GridBlock";
 import Headline from "@/components/segments/block/Headline";
@@ -21,6 +23,7 @@ export default function PageContent({
     | GridBlockProps
     | HeadlineProps
     | TripleColumnBlockProps
+    | ContactFormBlockProps
   )[];
 }) {
   return (
@@ -49,6 +52,12 @@ export default function PageContent({
             <DoubleColumn
               key={block._key}
               {...(block as DoubleColumnBlockProps)}
+            />
+          ))
+          .with("contactForm", () => (
+            <ContactForm
+              key={block._key}
+              {...(block as ContactFormBlockProps)}
             />
           ))
           .otherwise(() => (
