@@ -2,6 +2,7 @@ import { PageProps } from "@/app/type/page";
 import { getPageBySlug } from "@/lib/sanity";
 
 import PageComponent from "@/components/pages/Page";
+import Footer from "@/components/segments/navigation/Footer";
 
 export default async function Page({
   params,
@@ -19,5 +20,10 @@ export default async function Page({
     );
   }
 
-  return <PageComponent content={content as PageProps} />;
+  return (
+    <div className="relative flex flex-col min-h-screen">
+      <PageComponent content={content as PageProps} />
+      <Footer />
+    </div>
+  );
 }

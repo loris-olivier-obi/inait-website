@@ -52,18 +52,26 @@ export default function TitleHeadline({
   switch (titleLevel) {
     case "h2":
       mainTitle = (
-        <h2 className="font-dm-serif text-[86px] font-bold mb-0!">{title}</h2>
+        <h2 className="block font-dm-serif text-[104px] font-bold mb-0!">
+          {title}
+        </h2>
       );
       break;
     case "h3":
-      mainTitle = <h3 className="text-3xl font-bold">{title}</h3>;
+      mainTitle = (
+        <h3 className="block font-dm-serif text-7xl font-bold mb-4!">
+          {title}
+        </h3>
+      );
       break;
     case "h4":
-      mainTitle = <h4 className="text-2xl font-bold">{title}</h4>;
+      mainTitle = (
+        <h4 className="block font-dm-serif text-4xl font-bold">{title}</h4>
+      );
       break;
     default:
       mainTitle = (
-        <h2 className="font-dm-serif text-[86px] font-bold">{title}</h2>
+        <h2 className="block font-dm-serif text-[86px] font-bold">{title}</h2>
       );
       break;
   }

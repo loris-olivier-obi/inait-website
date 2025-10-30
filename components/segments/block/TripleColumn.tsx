@@ -1,4 +1,4 @@
-import { DoubleColumnBlockProps } from "@/app/type/page";
+import { TripleColumnBlockProps } from "@/app/type/page";
 import { cn } from "@/utils/classNames";
 import { PortableText } from "next-sanity";
 import DividerPortableText from "./DividerPortableText";
@@ -6,11 +6,12 @@ import styles from "./doubleColumn.module.css";
 import ImagePortableText from "./ImagePortableText";
 import VideoPortableText from "./VideoPortableText";
 
-export default function DoubleColumn({
-  leftColumn,
-  rightColumn,
+export default function TripleColumn({
+  firstColumn,
+  secondColumn,
+  thirdColumn,
   theme,
-}: DoubleColumnBlockProps) {
+}: TripleColumnBlockProps) {
   const portableComponents = {
     types: {
       divider: DividerPortableText,
@@ -49,10 +50,13 @@ export default function DoubleColumn({
       )}
     >
       <div className={cn(styles.content, textColor, "w-1/2")}>
-        <PortableText value={leftColumn} components={portableComponents} />
+        <PortableText value={firstColumn} components={portableComponents} />
       </div>
       <div className={cn(styles.content, textColor, "w-1/2")}>
-        <PortableText value={rightColumn} components={portableComponents} />
+        <PortableText value={secondColumn} components={portableComponents} />
+      </div>
+      <div className={cn(styles.content, textColor, "w-1/2")}>
+        <PortableText value={thirdColumn} components={portableComponents} />
       </div>
     </div>
   );

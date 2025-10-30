@@ -56,7 +56,9 @@ export default function GlobalNavigation({
         !isVisible && "-translate-y-full"
       )}
     >
-      <Logo color="white" className="w-auto h-8" />
+      <Link href="/">
+        <Logo color="white" className="w-auto h-8" />
+      </Link>
       <div className="flex flex-row gap-x-6">
         {pages.map((page: SimplePageProps) => (
           <Link
